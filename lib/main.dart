@@ -61,13 +61,15 @@ class _MyHomePageState extends State<MyHomePage> {
             Row( children: [
               FloatingActionButton(
                 onPressed: (){
-                  //BlocProvider.of<CounterCubit>(context).decrement();
+                  BlocProvider.of<CounterCubit>(context).decrement();
                 },
                 tooltip: 'Decrement',
                 child: Icon(Icons.remove),
               ),
               FloatingActionButton(
-                  onPressed: (){},
+                  onPressed: (){
+                    BlocProvider.of<CounterCubit>(context).increment();
+                  },
                 tooltip: 'Increment',
               )
             ],)
