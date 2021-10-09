@@ -50,56 +50,63 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: BlocListener<CounterCubit, CounterState>(
-        listener: (context, state) {
-          // TODO: implement listener
-          if (state.wasIncremented == true){
-            Scaffold.of(context).showSnackBar(
-              SnackBar(content: Text('Incremented'), duration: Duration(milliseconds: 300),)
-            );
-          } else {
-            Scaffold.of(context).showSnackBar(
-                SnackBar(content: Text('Decremented'), duration: Duration(milliseconds: 300),)
-            );
-          }
-        },
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Text('You have pushed the button this many times:',),
-              BlocBuilder<CounterCubit, CounterState>(
-                builder: (context, state) {
-                  if (state.counterValue < 0) {
-                    return Text('WOahh, NEGATIVE VALUE ${state.counterValue
-                        .toString()} ');
-                  }
-                  return Text(state.counterValue.toString(),
-                    style: Theme
-                        .of(context)
-                        .textTheme
-                        .headline4,
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text('You have pushed the button this many times:',),
+            BlocConsumer<CounterCubit, CounterState>(
+              listener:(context, state) {
+                if (state.wasIncremented == true){
+                  Scaffold.of(context).showSnackBar(
+                      SnackBar(content: Text('Incremented'), duration: Duration(milliseconds: 300),)
                   );
+                } else {
+                  Scaffold.of(context).showSnackBar(
+                      SnackBar(content: Text('Decremented'), duration: Duration(milliseconds: 300),)
+                  );
+                }
+              } ,
+              builder: (context, state) {
+                if (state.counterValue < 0) {
+                  return Text('WOahh, NEGATIVE VALUE ${state.counterValue
+                      .toString()} ');
+                }  else if (state.counterValue % 2 == 0) {
+                  return Text(
+                    'YAAAY ' + state.counterValue.toString(),
+                    style: Theme.of(context).textTheme.headline4,
+                  );
+                } else if (state.counterValue == 5) {
+                  return Text(
+                    'HMM, NUMBER 5',
+                    style: Theme.of(context).textTheme.headline4,
+                  );
+                } else
+                return Text(state.counterValue.toString(),
+                  style: Theme
+                      .of(context)
+                      .textTheme
+                      .headline4,
+                );
+              },
+            ),
+            Row(children: [
+              FloatingActionButton(
+                onPressed: () {
+                  BlocProvider.of<CounterCubit>(context).decrement();
                 },
+                tooltip: 'Decrement',
+                child: Icon(Icons.remove),
               ),
-              Row(children: [
-                FloatingActionButton(
-                  onPressed: () {
-                    BlocProvider.of<CounterCubit>(context).decrement();
-                  },
-                  tooltip: 'Decrement',
-                  child: Icon(Icons.remove),
-                ),
-                FloatingActionButton(
-                  onPressed: () {
-                    BlocProvider.of<CounterCubit>(context).increment();
-                  },
-                  tooltip: 'Increment',
-                  child: Icon(Icons.add),
-                )
-              ],)
-            ],
-          ),
+              FloatingActionButton(
+                onPressed: () {
+                  BlocProvider.of<CounterCubit>(context).increment();
+                },
+                tooltip: 'Increment',
+                child: Icon(Icons.add),
+              )
+            ],)
+          ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
