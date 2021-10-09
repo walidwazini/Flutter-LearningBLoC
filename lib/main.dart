@@ -55,22 +55,33 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text('You have pushed the button this many times:',),
-            Text('$_counter',
-              style: Theme.of(context).textTheme.headline4,
+            BlocBuilder<CounterCubit, CounterState>(
+              builder: (context, state) {
+                if(state.counterValue < 0){
+                  return Text('WOahh, NEGATIVE VALUE ${state.counterValue.toString()} ');
+                }
+                return Text( state.counterValue.toString(),
+                  style: Theme
+                      .of(context)
+                      .textTheme
+                      .headline4,
+                );
+              },
             ),
-            Row( children: [
+            Row(children: [
               FloatingActionButton(
-                onPressed: (){
+                onPressed: () {
                   BlocProvider.of<CounterCubit>(context).decrement();
                 },
                 tooltip: 'Decrement',
                 child: Icon(Icons.remove),
               ),
               FloatingActionButton(
-                  onPressed: (){
-                    BlocProvider.of<CounterCubit>(context).increment();
-                  },
+                onPressed: () {
+                  BlocProvider.of<CounterCubit>(context).increment();
+                },
                 tooltip: 'Increment',
+                child: Icon(Icons.add),
               )
             ],)
           ],
