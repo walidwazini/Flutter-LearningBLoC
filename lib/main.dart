@@ -73,7 +73,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       .toString()} ');
                 }  else if (state.counterValue % 2 == 0) {
                   return Text(
-                    'YAAAY ' + state.counterValue.toString(),
+                    'Yeay! ' + state.counterValue.toString(),
                     style: Theme.of(context).textTheme.headline4,
                   );
                 } else if (state.counterValue == 5) {
@@ -90,29 +90,27 @@ class _MyHomePageState extends State<MyHomePage> {
                 );
               },
             ),
-            Row(children: [
-              FloatingActionButton(
+            SizedBox(height: 23,),
+            Row( mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(primary: Colors.red),
                 onPressed: () {
                   BlocProvider.of<CounterCubit>(context).decrement();
                 },
-                tooltip: 'Decrement',
+                //tooltip: 'Decrement',
                 child: Icon(Icons.remove),
               ),
-              FloatingActionButton(
+              ElevatedButton(
                 onPressed: () {
                   BlocProvider.of<CounterCubit>(context).increment();
                 },
-                tooltip: 'Increment',
+                //tooltip: 'Increment',
                 child: Icon(Icons.add),
               )
             ],)
           ],
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
